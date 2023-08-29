@@ -33,6 +33,7 @@ public class Invoice implements Serializable {
     @NotBlank(message = "State is required")
     private String state;
 
+    @NotBlank(message = "Zipcode is required")
     private String zipcode;
 
     @NotBlank(message = "Item type is required")
@@ -41,47 +42,28 @@ public class Invoice implements Serializable {
     @NotNull(message = "Item ID is required")
     private Integer itemId;
 
-    @NotNull(message = "Unit price is required")
-    @DecimalMin(value = "0.00", message = "Unit price must be a positive value")
+
     private BigDecimal unitPrice;
 
     @NotNull(message = "Quantity is required")
     @Min(value = 1, message = "Quantity must be at least 1")
     private Integer quantity;
-
-    @NotNull(message = "Subtotal is required")
-    @DecimalMin(value = "0.00", message = "Subtotal must be a positive value")
     private BigDecimal subtotal;
-
-    @NotNull(message = "Tax is required")
-    @DecimalMin(value = "0.00", message = "Tax must be a positive value")
     private BigDecimal tax;
-
-    @NotNull(message = "Processing fee is required")
-    @DecimalMin(value = "0.00", message = "Processing fee must be a positive value")
     private BigDecimal processingFee;
-
-    @NotNull(message = "Total is required")
-    @DecimalMin(value = "0.00", message = "Total must be a positive value")
     private BigDecimal total;
 
     public Invoice() {}
 
-    public Invoice(String name, String city, String state, String itemType, Integer itemId,
-                   BigDecimal unitPrice, Integer quantity, BigDecimal subtotal,
-                   BigDecimal tax, BigDecimal processingFee, BigDecimal total) {
+    public Invoice(String name, String city, String state, String zipcode, String itemType, Integer itemId, Integer quantity) {
         this.name = name;
         this.city = city;
         this.state = state;
         this.itemType = itemType;
         this.itemId = itemId;
-        this.unitPrice = unitPrice;
         this.quantity = quantity;
-        this.subtotal = subtotal;
-        this.tax = tax;
-        this.processingFee = processingFee;
-        this.total = total;
     }
+
 
 
     public Integer getInvoiceId() {
