@@ -88,10 +88,10 @@ public class ConsoleControllerTest {
     public void updateConsoleTest() throws Exception {
         //ARRANGE
         Console console = new Console();
-        console.setModel("model");
-        console.setManufacturer("manufacturer");
-        console.setMemoryAmount("memoryAmount");
-        console.setProcessor("processor");
+        console.setModel("model1");
+        console.setManufacturer("manufacturer1");
+        console.setMemoryAmount("memoryAmount1");
+        console.setProcessor("processor1");
         console.setPrice(new BigDecimal("537.71"));
 
         Mockito.when(consoleRepository.save(Mockito.any(Console.class)))
