@@ -1,0 +1,85 @@
+
+# Game
+
+type Game {
+    game_id: ID!
+    title: String!
+    esrb_rating: String!
+    description: String!
+    price: Float!
+    studio: String!
+    quantity: Int!
+}
+
+# Console
+
+type Console {
+    console_id: ID!
+    model: String!
+    manufacturer: String! # todo: figure out correct type
+    memory_amount: String!
+    processor: String!
+    price: Float!
+    quantity: Float!
+}
+
+# Tshirt
+
+type Tshirt {
+    tshirt_id: ID!
+    size: String!
+    color: String!
+    description: String!
+    price: Float!
+    quantity: Int!
+}
+
+# Invoice
+
+type Invoice {
+    invoice_id: ID!
+    name: String!
+    street: String!
+    city: String!
+    state: String!
+    zipcode: String!
+    item_type: String!
+    item_id: Int!
+    unit_price: Float!
+    quantity: Int!
+    subtotal: Float!
+    tax: Float!
+    processing_fee: Float!
+    total: Float!
+}
+
+# Fee
+
+type Fee {
+    product_type: String!
+    fee: Float!
+}
+
+# Tax
+
+type Tax {
+    state: String!
+    rate: Float!
+}
+
+
+# Query Object
+
+# todo: check if this is correct
+type Query {
+
+    # Find class objects by ID
+
+    findGameById(id:ID!): Game
+    findConsoleById(id:ID!): Console
+    findTshirtById(id:ID!): Tshirt
+    findInvoiceById(id:ID!): Invoice
+    findFeeById(id:ID!): Fee
+    findTaxById(id:ID!): Tax
+
+}
