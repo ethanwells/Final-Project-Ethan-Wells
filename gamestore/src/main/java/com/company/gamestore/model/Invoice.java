@@ -1,0 +1,233 @@
+package com.company.gamestore.model;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name="invoice")
+public class Invoice implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer invoiceId;
+
+    @NotBlank(message = "Name is required")
+    private String name;
+    @NotBlank(message = "Street is required")
+    private String street;
+
+    @NotBlank(message = "City is required")
+    private String city;
+
+    @NotBlank(message = "State is required")
+    private String state;
+
+    private String zipcode;
+
+    @NotBlank(message = "Item type is required")
+    private String itemType;
+
+    @NotNull(message = "Item ID is required")
+    private Integer itemId;
+
+    @NotNull(message = "Unit price is required")
+    @DecimalMin(value = "0.00", message = "Unit price must be a positive value")
+    private BigDecimal unitPrice;
+
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    private Integer quantity;
+
+    @NotNull(message = "Subtotal is required")
+    @DecimalMin(value = "0.00", message = "Subtotal must be a positive value")
+    private BigDecimal subtotal;
+
+    @NotNull(message = "Tax is required")
+    @DecimalMin(value = "0.00", message = "Tax must be a positive value")
+    private BigDecimal tax;
+
+    @NotNull(message = "Processing fee is required")
+    @DecimalMin(value = "0.00", message = "Processing fee must be a positive value")
+    private BigDecimal processingFee;
+
+    @NotNull(message = "Total is required")
+    @DecimalMin(value = "0.00", message = "Total must be a positive value")
+    private BigDecimal total;
+
+    public Invoice() {}
+
+    public Invoice(String name, String city, String state, String itemType, Integer itemId,
+                   BigDecimal unitPrice, Integer quantity, BigDecimal subtotal,
+                   BigDecimal tax, BigDecimal processingFee, BigDecimal total) {
+        this.name = name;
+        this.city = city;
+        this.state = state;
+        this.itemType = itemType;
+        this.itemId = itemId;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.subtotal = subtotal;
+        this.tax = tax;
+        this.processingFee = processingFee;
+        this.total = total;
+    }
+
+
+    public Integer getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(Integer invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+
+    public BigDecimal getProcessingFee() {
+        return processingFee;
+    }
+
+    public void setProcessingFee(BigDecimal processingFee) {
+        this.processingFee = processingFee;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return invoiceId != null && invoice.equals(invoice.invoiceId);
+    }
+
+    @Override
+    public int hashCode() {
+        return invoiceId != null ? invoiceId.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceId=" + invoiceId +
+                ", name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", itemType='" + itemType + '\'' +
+                ", itemId=" + itemId +
+                ", unitPrice=" + unitPrice +
+                ", quantity=" + quantity +
+                ", subtotal=" + subtotal +
+                ", tax=" + tax +
+                ", processingFee=" + processingFee +
+                ", total=" + total +
+                '}';
+    }
+
+}
