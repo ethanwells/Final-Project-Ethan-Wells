@@ -17,7 +17,7 @@ public class InvoiceServiceLayer {
     private TaxRepository taxRepository;
 
     @Autowired
-    public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository){
+    public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository){
         this.gameRepository = gameRepository;
         this.taxRepository = taxRepository;
     }
@@ -59,7 +59,7 @@ public class InvoiceServiceLayer {
 
         //Work in Progress
 
-
+        return null;
     }
 
 }

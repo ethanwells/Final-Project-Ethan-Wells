@@ -3,9 +3,8 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Console;
 import com.company.gamestore.model.Game;
-import com.company.gamestore.repository.ConsoleRepository;
-import com.company.gamestore.repository.GameRepository;
-import com.company.gamestore.repository.InvoiceRepository;
+import com.company.gamestore.model.Tshirt;
+import com.company.gamestore.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -34,7 +33,7 @@ import java.util.Optional;
 
     // As a user, I would like to be able to search for consoles by manufacturer.
 
-    // As a user, I would like to be able to search for games by color and size.
+    // As a user, I would like to be able to search for tshirts by color and size.
 
 
 // todo: not sure how to implement the following with graphql:
@@ -56,8 +55,8 @@ public class GraphController {
     @Autowired
     InvoiceRepository invoiceRepository;
 
-    @Autowired
-    FeeRepository feeRepository;
+    //@Autowired
+    //FeeRepository feeRepository;
 
     @Autowired
     TaxRepository taxRepository;
@@ -97,8 +96,8 @@ public class GraphController {
 
     // return game by studio
     @SchemaMapping
-    public Game game(Studio studio) {
-        Optional<Game> returnVal = gameRepository.findById(studio.getId());
+    public List<Game> findGameByStudio(String studio) {
+        Optional<List<Game>> returnVal = gameRepository.findGameByStudio(studio);
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -108,8 +107,8 @@ public class GraphController {
 
     // return game by ESRB rating
     @SchemaMapping
-    public Game game(Esrb_rating esrb_rating) {
-        Optional<Game> returnVal = gameRepository.findById(esrb_rating.getId());
+    public List<Game> findGameByEsrbRatingString(String esrbRating) {
+        Optional<List<Game>> returnVal = gameRepository.findGameByEsrbRating(esrbRating);
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -119,8 +118,8 @@ public class GraphController {
 
     // return game by title
     @SchemaMapping
-    public Game game(Title title) {
-        Optional<Game> returnVal = gameRepository.findById(title.getId());
+    public List<Game> findGameByTitle(String title) {
+        Optional<List<Game>> returnVal = gameRepository.findGameByTitle(title);
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -133,8 +132,8 @@ public class GraphController {
 
     // return console by manufacturer
     @SchemaMapping
-    public Console console(Manufacturer manufacturer) {
-        Optional<Console> returnVal = consoleRepository.findById(Manufacturer.getId());
+    public List<Console> findConsoleByManufacturer(String manufacturer) {
+        Optional<List<Console>> returnVal = consoleRepository.findConsoleByManufacturer(manufacturer);
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -144,10 +143,10 @@ public class GraphController {
 
     // As a user, I would like to be able to search for games by color and size.
 
-    // return game by color
+    // return tshirt by color
     @SchemaMapping
-    public Game game(Color color) {
-        Optional<Game> returnVal = gameRepository.findById(color.getId());
+    public List<Tshirt> findTshirtByColor(String color) {
+        Optional<List<Tshirt>> returnVal = tshirtRepository.findByColor(color);
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -155,10 +154,10 @@ public class GraphController {
         }
     }
 
-    // return game by size
+    // return tshirt by size
     @SchemaMapping
-    public Game game(Size size) {
-        Optional<Game> returnVal = gameRepository.findById(size.getId());
+    public List<Tshirt> findTshirtBySize(String size) {
+        Optional<List<Tshirt>> returnVal = tshirtRepository.findBySize(size);
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {

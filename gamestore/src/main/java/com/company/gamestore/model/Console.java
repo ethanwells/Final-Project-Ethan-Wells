@@ -23,16 +23,15 @@ public class Console {
     @Size(max = 50, message = "manufacturer name must not exceed 50 characters")
     private String manufacturer; // not null, required, 50 chars
 
-    @Size(max = 255, message = "memoryAmount must not exceed 20 characters")
+    @Size(max = 20, message = "memoryAmount must not exceed 20 characters")
     private String memoryAmount; // 20 chars
 
-    @Digits(integer=3, fraction=2, message = "Processor should have up to 3 integer digits and 2 fraction digits.")
-    @DecimalMin(value = "0.00", message = "Processor must be a positive value")
+
+    @Size(max = 20, message = "manufacturer name must not exceed 20 characters")
     private String processor; // 20 chars
 
-    @NotBlank(message = "Price is required")
+    @NotNull(message = "Price is required")
     @Digits(integer=3, fraction=2, message = "Price should have up to 3 integer digits and 2 fraction digits.")
-    @Size(max = 50, message = "Price must not exceed 50 characters")
     private BigDecimal price; // not null, required, decimal(5, 2)
 
     @Min(value = 0, message = "Quantity must be a non-negative value")
