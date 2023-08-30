@@ -32,6 +32,7 @@ public class Console {
 
     @NotNull(message = "Price is required")
     @Digits(integer=3, fraction=2, message = "Price should have up to 3 integer digits and 2 fraction digits.")
+
     private BigDecimal price; // not null, required, decimal(5, 2)
 
     @Min(value = 0, message = "Quantity must be a non-negative value")

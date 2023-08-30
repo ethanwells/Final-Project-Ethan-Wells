@@ -27,6 +27,7 @@ public class ConsoleController {
         }
     }
 
+
     @GetMapping("/console/manufacturer")
     @ResponseStatus(HttpStatus.OK)
     public List<Console> getConsoleByManufacturer(@RequestParam("manufacturer") String manufacturer) {

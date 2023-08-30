@@ -5,6 +5,9 @@ import com.company.gamestore.model.Console;
 import com.company.gamestore.model.Game;
 import com.company.gamestore.model.Tshirt;
 import com.company.gamestore.repository.*;
+import com.company.gamestore.repository.ConsoleRepository;
+import com.company.gamestore.repository.GameRepository;
+import com.company.gamestore.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -36,6 +39,7 @@ import java.util.Optional;
     // As a user, I would like to be able to search for tshirts by color and size.
 
 
+
 // todo: not sure how to implement the following with graphql:
 
     // As a user, I would like to be able to purchase a specified quantity of products (games, consoles, T-shirts) and an invoice will be created that includes any taxes and processing fees.
@@ -55,8 +59,8 @@ public class GraphController {
     @Autowired
     InvoiceRepository invoiceRepository;
 
-    //@Autowired
-    //FeeRepository feeRepository;
+    @Autowired
+    FeeRepository feeRepository;
 
     @Autowired
     TaxRepository taxRepository;
@@ -96,8 +100,10 @@ public class GraphController {
 
     // return game by studio
     @SchemaMapping
+
     public List<Game> findGameByStudio(String studio) {
         Optional<List<Game>> returnVal = gameRepository.findGameByStudio(studio);
+
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -109,6 +115,7 @@ public class GraphController {
     @SchemaMapping
     public List<Game> findGameByEsrbRatingString(String esrbRating) {
         Optional<List<Game>> returnVal = gameRepository.findGameByEsrbRating(esrbRating);
+
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -120,6 +127,7 @@ public class GraphController {
     @SchemaMapping
     public List<Game> findGameByTitle(String title) {
         Optional<List<Game>> returnVal = gameRepository.findGameByTitle(title);
+
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -134,6 +142,7 @@ public class GraphController {
     @SchemaMapping
     public List<Console> findConsoleByManufacturer(String manufacturer) {
         Optional<List<Console>> returnVal = consoleRepository.findConsoleByManufacturer(manufacturer);
+
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -147,6 +156,7 @@ public class GraphController {
     @SchemaMapping
     public List<Tshirt> findTshirtByColor(String color) {
         Optional<List<Tshirt>> returnVal = tshirtRepository.findByColor(color);
+  
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
@@ -158,6 +168,7 @@ public class GraphController {
     @SchemaMapping
     public List<Tshirt> findTshirtBySize(String size) {
         Optional<List<Tshirt>> returnVal = tshirtRepository.findBySize(size);
+
         if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
