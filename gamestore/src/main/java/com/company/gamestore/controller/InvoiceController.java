@@ -18,28 +18,29 @@ public class InvoiceController {
     private InvoiceRepository invoiceRepo;
     private InvoiceServiceLayer invoiceServiceLayer;
 
-    @GetMapping("/invoices")
-    public List<Invoice> getAllInvoices() {
-        return invoiceRepo.findAll();
-    }
-
-    @GetMapping("/invoices/{invoiceId}")
-    public Optional<Invoice> getInvoiceById(@PathVariable("invoiceId") int invoiceId) {
-        return invoiceRepo.findById(invoiceId);
-    }
-
-    @GetMapping("/invoices/by-name")
-    public List<Invoice> getInvoiceByName(@RequestParam("name") String name) {
-        return invoiceRepo.findInvoiceByName(name);
-    }
-
-    @PostMapping("/invoices")
+    @PostMapping("/invoice")
     @ResponseStatus(HttpStatus.CREATED)
     public Invoice addInvoice(@Valid @RequestBody Invoice invoice) {
        return invoiceServiceLayer.createInvoice(invoice);
     }
 
-    @PutMapping("/invoices/{invoiceId}")
+    @GetMapping("/invoice/{invoiceId}")
+    public Optional<Invoice> getInvoiceById(@PathVariable("invoiceId") int invoiceId) {
+        return invoiceRepo.findById(invoiceId);
+    }
+
+    @GetMapping("/invoices")
+    public List<Invoice> getAllInvoices() {
+        return invoiceRepo.findAll();
+    }
+
+
+    @GetMapping("/invoice/by-name")
+    public List<Invoice> getInvoiceByName(@RequestParam("name") String name) {
+        return invoiceRepo.findInvoiceByName(name);
+    }
+
+    @PutMapping("/invoice/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvoice(
             @PathVariable("invoiceId") int invoiceId,
@@ -52,7 +53,7 @@ public class InvoiceController {
         invoiceRepo.save(invoice);
     }
 
-    @DeleteMapping("/invoices/{invoiceId}")
+    @DeleteMapping("/invoice/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInvoice(@PathVariable("invoiceId") int invoiceId) {
         if (!invoiceRepo.existsById(invoiceId)) {

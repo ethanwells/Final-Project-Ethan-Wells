@@ -19,6 +19,7 @@ public class InvoiceServiceLayer {
     private InvoiceRepository invoiceRepository;
 
     @Autowired
+
     public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository, FeeRepository feeRepository, InvoiceRepository invoiceRepository, TshirtRepository tshirtRepository){
         this.gameRepository = gameRepository;
         this.taxRepository = taxRepository;
@@ -87,6 +88,7 @@ public class InvoiceServiceLayer {
         Invoice completeData = invoiceRepository.save(partialData);
 
         return completeData;
+
     }
 
 }
