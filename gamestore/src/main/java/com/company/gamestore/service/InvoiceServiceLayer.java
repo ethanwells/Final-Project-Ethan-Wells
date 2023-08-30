@@ -1,13 +1,7 @@
 package com.company.gamestore.service;
 
-import com.company.gamestore.model.Fee;
-import com.company.gamestore.model.Game;
-import com.company.gamestore.model.Invoice;
-import com.company.gamestore.model.Tax;
-import com.company.gamestore.repository.FeeRepository;
-import com.company.gamestore.repository.GameRepository;
-import com.company.gamestore.repository.InvoiceRepository;
-import com.company.gamestore.repository.TaxRepository;
+import com.company.gamestore.model.*;
+import com.company.gamestore.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +14,17 @@ public class InvoiceServiceLayer {
     private TaxRepository taxRepository;
     private FeeRepository feeRepository;
 
+    private TshirtRepository tshirtRepository;
+
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository, FeeRepository feeRepository, InvoiceRepository invoiceRepository){
+    public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository, FeeRepository feeRepository, InvoiceRepository invoiceRepository, TshirtRepository tshirtRepository){
         this.gameRepository = gameRepository;
         this.taxRepository = taxRepository;
         this.feeRepository = feeRepository;
         this.invoiceRepository = invoiceRepository;
+        this.tshirtRepository = tshirtRepository;
     }
 
     public Invoice createInvoice(Invoice partialData){
@@ -37,6 +34,9 @@ public class InvoiceServiceLayer {
 
         //Get data corresponding to their itemType & itemId
         switch (itemType) {
+            case "T-shirts":
+                data = tshirtRepository.findById(partialData.getItemId());
+                break;
             case "Games":
                 data = gameRepository.findById(partialData.getItemId());
                 break;
@@ -48,6 +48,13 @@ public class InvoiceServiceLayer {
             Game game = (Game) data;
             partialData.setUnitPrice(game.getPrice());
         }
+
+        if (data instanceof Tshirt) {
+            Tshirt tshirt = (Tshirt) data;
+            partialData.setUnitPrice(tshirt.getPrice());
+        }
+
+
 
         //Subtotal Calculation
         BigDecimal quantity = BigDecimal.valueOf(partialData.getQuantity());
