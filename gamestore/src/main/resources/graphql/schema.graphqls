@@ -1,5 +1,4 @@
-
-# Game
+#Game
 
 type Game {
     game_id: ID!
@@ -16,7 +15,7 @@ type Game {
 type Console {
     console_id: ID!
     model: String!
-    manufacturer: String! # todo: figure out correct type
+    manufacturer: String!
     memory_amount: String!
     processor: String!
     price: Float!
@@ -70,16 +69,16 @@ type Tax {
 
 # Query Object
 
-# todo: check if this is correct
 type Query {
 
     # Find class objects by ID
-
     findGameById(id:ID!): Game
     findConsoleById(id:ID!): Console
-    findTshirtById(id:ID!): Tshirt
-    findInvoiceById(id:ID!): Invoice
-    findFeeById(id:ID!): Fee
-    findTaxById(id:ID!): Tax
+    getAllGames:[Game!]!
+    getGameByTitle(title: String!):Game
+    getGameByEsrbRating(esrb_rating: String!):Game
+    getGameByStudio(studio: String!):Game
+    getAllConsoles: [Console!]!
+    getConsoleByManufacturer(manufacturer: String!):Console
 
 }

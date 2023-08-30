@@ -2,6 +2,7 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
+import com.company.gamestore.service.InvoiceServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,29 +16,31 @@ import java.util.Optional;
 public class InvoiceController {
     @Autowired
     private InvoiceRepository invoiceRepo;
+    private InvoiceServiceLayer invoiceServiceLayer;
+
+    @PostMapping("/invoice")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Invoice addInvoice(@Valid @RequestBody Invoice invoice) {
+       return invoiceServiceLayer.createInvoice(invoice);
+    }
+
+    @GetMapping("/invoice/{invoiceId}")
+    public Optional<Invoice> getInvoiceById(@PathVariable("invoiceId") int invoiceId) {
+        return invoiceRepo.findById(invoiceId);
+    }
 
     @GetMapping("/invoices")
     public List<Invoice> getAllInvoices() {
         return invoiceRepo.findAll();
     }
 
-    @GetMapping("/invoices/{invoiceId}")
-    public Optional<Invoice> getInvoiceById(@PathVariable("invoiceId") int invoiceId) {
-        return invoiceRepo.findById(invoiceId);
-    }
 
-    @GetMapping("/invoices/by-name")
+    @GetMapping("/invoice/by-name")
     public List<Invoice> getInvoiceByName(@RequestParam("name") String name) {
         return invoiceRepo.findInvoiceByName(name);
     }
 
-    @PostMapping("/invoices")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Invoice addInvoice(@Valid @RequestBody Invoice invoice) {
-        return invoiceRepo.save(invoice); //Modify this
-    }
-
-    @PutMapping("/invoices/{invoiceId}")
+    @PutMapping("/invoice/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvoice(
             @PathVariable("invoiceId") int invoiceId,
@@ -50,7 +53,7 @@ public class InvoiceController {
         invoiceRepo.save(invoice);
     }
 
-    @DeleteMapping("/invoices/{invoiceId}")
+    @DeleteMapping("/invoice/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInvoice(@PathVariable("invoiceId") int invoiceId) {
         if (!invoiceRepo.existsById(invoiceId)) {

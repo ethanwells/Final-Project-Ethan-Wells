@@ -28,17 +28,17 @@ public class GameController {
 
     @GetMapping("/games/by-studio")
     public List<Game> getGamesByStudio(@RequestParam("studio") String studio) {
-        return gameRepo.findGameByStudio(studio);
+        return gameRepo.findGameByStudio(studio).get();
     }
 
     @GetMapping("/games/by-rating")
     public List<Game> getGamesByESRB(@RequestParam("esrbRating") String esrbRating) {
-        return gameRepo.findGameByESRB(esrbRating);
+        return gameRepo.findGameByEsrbRating(esrbRating).get();
     }
 
     @GetMapping("/games/by-title")
     public List<Game> getGamesByTitle(@RequestParam("title") String title) {
-        return gameRepo.findGameByTitle(title);
+        return gameRepo.findGameByTitle(title).get();
     }
 
 
