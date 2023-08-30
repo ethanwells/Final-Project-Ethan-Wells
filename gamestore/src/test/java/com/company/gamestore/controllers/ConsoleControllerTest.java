@@ -72,6 +72,18 @@ public class ConsoleControllerTest {
                 .andExpect(status().isOk());
     }
 
+    // Read By Manufacturer
+    @Test
+    public void testGetConsoleByManufacturer() throws Exception {
+        // ACT
+        mockMvc.perform(
+                        get("/console/manufacturer")  // Perform the GET request
+                                .param("manufacturer", "manufacturer1")  // Add query parameter
+                                .contentType(MediaType.APPLICATION_JSON))  // Tell the server it's in JSON format
+                .andDo(print())  // Print results to console
+                .andExpect(status().isOk());
+    }
+
     // Read All
     @Test
     public void testGetAllConsoles() throws Exception {

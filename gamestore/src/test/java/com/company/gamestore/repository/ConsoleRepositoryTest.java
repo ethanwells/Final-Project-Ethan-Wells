@@ -62,6 +62,25 @@ public class ConsoleRepositoryTest {
         assertEquals(foundConsole.get(), console1);
     }
 
+    // Read By Manufacturer
+    @Test
+    public void shouldGetConsoleByManufacturer() {
+        // Arrange
+        Console console1 = new Console();
+        console1.setModel("model1");
+        console1.setManufacturer("manufacturer1");
+        console1.setMemoryAmount("memoryAmount1");
+        console1.setProcessor("processor1");
+        console1.setPrice(new BigDecimal("123.57"));
+
+        // Act
+        console1 = consoleRepository.save(console1);
+        Optional<List<Console>> foundConsole = consoleRepository.findConsoleByManufacturer(console1.getManufacturer());
+
+        // Assert
+        assertTrue(foundConsole.get().contains(console1));
+    }
+
     // Read All
     @Test
     public void shouldGetAllConsoles() {
