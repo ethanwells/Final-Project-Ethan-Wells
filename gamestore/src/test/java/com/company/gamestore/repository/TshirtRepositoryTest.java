@@ -1,4 +1,4 @@
-package com.company.gamestore.repositoryTests;
+package com.company.gamestore.repository;
 
 import com.company.gamestore.model.Tshirt;
 import com.company.gamestore.repository.TshirtRepository;

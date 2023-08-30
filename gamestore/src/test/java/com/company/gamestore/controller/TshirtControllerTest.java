@@ -1,4 +1,4 @@
-package com.company.gamestore.controllerTests;
+package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Tshirt;
 import com.company.gamestore.repository.TshirtRepository;

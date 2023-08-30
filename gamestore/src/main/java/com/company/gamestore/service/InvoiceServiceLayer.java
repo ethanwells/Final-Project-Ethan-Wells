@@ -13,18 +13,18 @@ public class InvoiceServiceLayer {
     private GameRepository gameRepository;
     private TaxRepository taxRepository;
     private FeeRepository feeRepository;
-
     private TshirtRepository tshirtRepository;
-
+    private ConsoleRepository consoleRepository;
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository, FeeRepository feeRepository, InvoiceRepository invoiceRepository, TshirtRepository tshirtRepository){
+    public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository, FeeRepository feeRepository, InvoiceRepository invoiceRepository, TshirtRepository tshirtRepository, ConsoleRepository consoleRepository){
         this.gameRepository = gameRepository;
         this.taxRepository = taxRepository;
         this.feeRepository = feeRepository;
         this.invoiceRepository = invoiceRepository;
         this.tshirtRepository = tshirtRepository;
+        this.consoleRepository = consoleRepository;
     }
 
     public Invoice createInvoice(Invoice partialData){
@@ -34,12 +34,16 @@ public class InvoiceServiceLayer {
 
         //Get data corresponding to their itemType & itemId
         switch (itemType) {
+            case "Consoles":
+                data = consoleRepository.findById(partialData.getItemId());
+                break;
             case "T-shirts":
                 data = tshirtRepository.findById(partialData.getItemId());
                 break;
             case "Games":
                 data = gameRepository.findById(partialData.getItemId());
                 break;
+
             default:
                 throw new IllegalArgumentException("Item type is illegal");
         }
@@ -54,6 +58,11 @@ public class InvoiceServiceLayer {
             partialData.setUnitPrice(tshirt.getPrice());
         }
 
+        if (data instanceof Console) {
+            Console console = (Console) data;
+            partialData.setUnitPrice(console.getPrice());
+        }
+
 
 
         //Subtotal Calculation
@@ -66,7 +75,7 @@ public class InvoiceServiceLayer {
         Optional<Tax> query = taxRepository.findTaxByState(partialData.getState());
 
         if(query.isEmpty()){
-            throw new IllegalArgumentException("State does not exist");
+            throw new IllegalArgumentException("Tax does not exist");
         }
 
         Tax stateTax = query.get();
@@ -74,6 +83,10 @@ public class InvoiceServiceLayer {
 
         //Find processing fee
         Optional<Fee> query2 = feeRepository.findFeeByProductType(partialData.getItemType());
+
+        if(query2.isEmpty()){
+            throw new IllegalArgumentException("Fee does not exist");
+        }
 
         Fee processingFee = query2.get();
         partialData.setProcessingFee(processingFee.getFee());
