@@ -3,9 +3,10 @@ import com.company.gamestore.model.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GameRepository extends JpaRepository<Game, Integer> {
-    public List<Game> findGameByStudio (String studio);
-    public List<Game> findGameByESRB (String esrbRating);
-    public List<Game> findGameByTitle (String title);
+    public Optional<List<Game>> findGameByStudio (String studio);
+    public Optional<List<Game>> findGameByEsrbRating (String esrbRating);
+    public Optional<List<Game>> findGameByTitle (String title);
 }

@@ -28,6 +28,19 @@ public class ConsoleController {
         }
     }
 
+
+    @GetMapping("/console/manufacturer")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Console> getConsoleByManufacturer(@RequestParam("manufacturer") String manufacturer) {
+
+        Optional<List<Console>> returnVal = consoleRepository.findConsoleByManufacturer(manufacturer);
+        if (returnVal.isPresent()) {
+            return returnVal.get();
+        } else {
+            return null;
+        }
+    }
+
     //    Find all consoles
     @GetMapping("console/consoles")
     @ResponseStatus(HttpStatus.OK)
