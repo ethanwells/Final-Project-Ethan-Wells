@@ -2,6 +2,7 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
+import com.company.gamestore.service.InvoiceServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class InvoiceController {
     @Autowired
     private InvoiceRepository invoiceRepo;
+    private InvoiceServiceLayer invoiceServiceLayer;
 
     @GetMapping("/invoices")
     public List<Invoice> getAllInvoices() {
@@ -34,7 +36,7 @@ public class InvoiceController {
     @PostMapping("/invoices")
     @ResponseStatus(HttpStatus.CREATED)
     public Invoice addInvoice(@Valid @RequestBody Invoice invoice) {
-        return invoiceRepo.save(invoice); //Modify this
+       return invoiceServiceLayer.createInvoice(invoice);
     }
 
     @PutMapping("/invoices/{invoiceId}")
