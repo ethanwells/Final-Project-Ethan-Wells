@@ -3,7 +3,8 @@ import com.company.gamestore.model.Invoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
-    List<Invoice> findInvoiceByName(String name);
+    Optional<List<Invoice>> findInvoiceByName(String name);
 }
