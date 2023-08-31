@@ -118,7 +118,7 @@ public class FeeRepositoryTest {
         assertEquals(foundFee.get(), fee);
 
         // Act
-        feeRepository.deleteByProductType(fee.getProductType());
+        feeRepository.delete(foundFee.get());
 
         foundFee = feeRepository.findFeeByProductType(fee.getProductType());
 

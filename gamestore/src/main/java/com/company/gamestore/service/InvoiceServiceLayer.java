@@ -63,7 +63,7 @@ public class InvoiceServiceLayer {
                 break;
 
             default:
-                throw new IllegalArgumentException("Item type is illegal");
+                throw new NotFoundException("Item type was not found");
         }
 
         return invoiceRepository.save(completeData);
@@ -90,7 +90,7 @@ public class InvoiceServiceLayer {
         }
 
         Tax stateTax = query.get();
-        partialData.setTax(stateTax.getRate());
+        partialData.setTax(stateTax.getRate().multiply(partialData.getSubtotal()));
 
         Optional<Fee> query2 = feeRepository.findFeeByProductType(partialData.getItemType());
         if (query2.isEmpty()) {
@@ -98,10 +98,17 @@ public class InvoiceServiceLayer {
         }
 
         Fee processingFee = query2.get();
-        partialData.setProcessingFee(processingFee.getFee());
+
+
+        if( partialData.getQuantity() > 10){
+            BigDecimal additionalFee = new BigDecimal("15.49");
+            partialData.setProcessingFee(processingFee.getFee().add(additionalFee));
+        }else{
+            partialData.setProcessingFee(processingFee.getFee());
+        }
 
         // Calculate with tax and processing fee
-        BigDecimal subtotalTaxApplied = partialData.getSubtotal().multiply(partialData.getTax()).add(partialData.getSubtotal());
+        BigDecimal subtotalTaxApplied = partialData.getSubtotal().add(partialData.getTax());
         BigDecimal total = subtotalTaxApplied.add(partialData.getProcessingFee());
 
         partialData.setTotal(total);
