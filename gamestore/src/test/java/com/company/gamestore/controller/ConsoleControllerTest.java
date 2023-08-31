@@ -1,4 +1,4 @@
-package com.company.gamestore.controllers;
+package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Console;
 import com.company.gamestore.repository.ConsoleRepository;
