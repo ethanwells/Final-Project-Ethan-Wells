@@ -52,7 +52,7 @@ public class ConsoleController {
     //    Create a new console.
     @PostMapping("/console")
     @ResponseStatus(HttpStatus.CREATED)
-    public Console addConsole(@Valid @RequestBody Console console) {
+    public Console addConsole(@RequestBody @Valid Console console) {
         return consoleRepository.save(console);
     }
 
@@ -60,7 +60,7 @@ public class ConsoleController {
     //    Update an existing console
     @PutMapping("/console")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateConsole(@Valid @RequestBody Console console) {
+    public void updateConsole(@RequestBody @Valid Console console) {
         consoleRepository.save(console);
     }
 

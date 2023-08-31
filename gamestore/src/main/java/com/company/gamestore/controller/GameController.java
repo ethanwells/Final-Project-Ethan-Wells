@@ -2,6 +2,7 @@ package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Game;
 import com.company.gamestore.repository.GameRepository;
+import org.aspectj.lang.annotation.DeclareWarning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +27,18 @@ public class GameController {
         return gameRepo.findById(gameId);
     }
 
-    @GetMapping("/games/by-studio/{studio}")
-    public List<Game> getGamesByStudio(@PathVariable("studio") String studio) {
+    @GetMapping("/games/by-studio")
+    public List<Game> getGamesByStudio(@RequestParam("studio") String studio) {
         return gameRepo.findGameByStudio(studio).get();
     }
 
-    @GetMapping("/games/by-rating/{esrbRating}")
-    public List<Game> getGamesByESRB(@PathVariable("esrbRating") String esrbRating) {
+    @GetMapping("/games/by-rating")
+    public List<Game> getGamesByESRB(@RequestParam("esrbRating") String esrbRating) {
         return gameRepo.findGameByEsrbRating(esrbRating).get();
     }
 
-    @GetMapping("/games/by-title/{title}")
-    public List<Game> getGamesByTitle(@PathVariable("title") String title) {
+    @GetMapping("/games/by-title")
+    public List<Game> getGamesByTitle(@RequestParam("title") String title) {
         return gameRepo.findGameByTitle(title).get();
     }
 
