@@ -29,9 +29,9 @@ public class ConsoleController {
     }
 
 
-    @GetMapping("/console/manufacturer/{manufacturer}")
+    @GetMapping("/console/manufacturer")
     @ResponseStatus(HttpStatus.OK)
-    public List<Console> getConsoleByManufacturer(@PathVariable("manufacturer") String manufacturer) {
+    public List<Console> getConsoleByManufacturer(@RequestParam("manufacturer") String manufacturer) {
 
         Optional<List<Console>> returnVal = consoleRepository.findConsoleByManufacturer(manufacturer);
         if (returnVal.isPresent()) {

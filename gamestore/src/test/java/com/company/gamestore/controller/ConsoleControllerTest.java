@@ -77,7 +77,7 @@ public class ConsoleControllerTest {
     public void testGetConsoleByManufacturer() throws Exception {
         // ACT
         mockMvc.perform(
-                        get("/console/manufacturer/manufacturer1")  // Perform the GET request
+                        get("/console/manufacturer")  // Perform the GET request
                                 .param("manufacturer", "manufacturer1")  // Add query parameter
                                 .contentType(MediaType.APPLICATION_JSON))  // Tell the server it's in JSON format
                 .andDo(print())  // Print results to console
