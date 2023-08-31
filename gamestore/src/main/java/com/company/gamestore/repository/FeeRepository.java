@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface FeeRepository extends JpaRepository<Fee, Integer> {
     public Optional<Fee> findFeeByProductType (String type);
-
+    void deleteByProductType(String type);
 }

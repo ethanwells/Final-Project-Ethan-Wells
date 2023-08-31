@@ -51,6 +51,7 @@ public class InvoiceRepositoryTest {
         assertEquals(invoice, invoice1.get());
     }
 
+
     // Read By ID
     @Test
     public void shouldGetInvoiceById() {
@@ -76,6 +77,35 @@ public class InvoiceRepositoryTest {
 
         // Assert
         assertEquals(foundInvoice.get(), invoice1);
+    }
+
+    //Read by Name
+    @Test
+    public void shouldGetInvoiceByName(){
+        // Arrange
+        Invoice invoice1 = new Invoice();
+        invoice1.setName("name1");
+        invoice1.setStreet("street1");
+        invoice1.setCity("city1");
+        invoice1.setState("state1");
+        invoice1.setZipcode("zipcode1");
+        invoice1.setItemType("itemType1");
+        invoice1.setItemId(3);
+        invoice1.setUnitPrice(new BigDecimal("111.11"));
+        invoice1.setQuantity(5);
+        invoice1.setSubtotal(new BigDecimal("333.33"));
+        invoice1.setTax(new BigDecimal("535.55"));
+        invoice1.setProcessingFee(new BigDecimal("777.77"));
+        invoice1.setTotal(new BigDecimal("131.31"));
+
+        // Act
+        invoice1 = invoiceRepository.save(invoice1);
+        Optional<List<Invoice>> foundInvoice = invoiceRepository.findInvoiceByName(invoice1.getName());
+
+        // Assert
+        assertTrue(foundInvoice.get().contains(invoice1));
+
+
     }
 
 

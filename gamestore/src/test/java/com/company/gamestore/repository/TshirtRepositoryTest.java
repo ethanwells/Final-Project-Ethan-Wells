@@ -129,7 +129,7 @@ public class TshirtRepositoryTest {
 
     // Read All
     @Test
-    public void shouldGetAllAuthors() {
+    public void shouldGetAllTshirts() {
         // Arrange
         Tshirt tshirt1 = new Tshirt();
         tshirt1.setColor("white");
@@ -159,7 +159,7 @@ public class TshirtRepositoryTest {
 
     // Update
     @Test
-    public void shouldUpdateAuthor() {
+    public void shouldUpdateTshirt() {
         // Arrange
         Tshirt tshirt1 = new Tshirt();
         tshirt1.setColor("white");
@@ -188,7 +188,7 @@ public class TshirtRepositoryTest {
 
     // Delete by ID
     @Test
-    public void shouldDeleteAuthorById() {
+    public void shouldDeleteTshirtById() {
         // Arrange
         Tshirt tshirt = new Tshirt();
         tshirt.setColor("white");
