@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class InvoiceServiceLayerTest {
@@ -129,7 +128,6 @@ public class InvoiceServiceLayerTest {
         invoice1.setItemId(1);
         invoice1.setQuantity(2);
 
-        //Confused here
 
 
         Invoice invoice2 = new Invoice();
@@ -215,22 +213,25 @@ public class InvoiceServiceLayerTest {
         invoice1.setItemId(1);
         invoice1.setQuantity(2);
 
+        Invoice actual = invoiceServiceLayer.createInvoice(invoice1);
 
-        Invoice invoice2 = new Invoice();
-        invoice2.setInvoiceId(1);
-        invoice2.setName("John Doe");
-        invoice2.setStreet("123 Main St");
-        invoice2.setCity("Anytown");
-        invoice2.setState("CA");
-        invoice2.setZipcode("12345");
-        invoice2.setItemType("Consoles");
-        invoice2.setItemId(1);
-        invoice2.setUnitPrice(new BigDecimal("499.99"));
-        invoice2.setQuantity(2);
-        invoice2.setSubtotal(new BigDecimal("999.98"));
-        invoice2.setTax(new BigDecimal("80.00"));
-        invoice2.setProcessingFee(new BigDecimal("15.49"));
-        invoice2.setTotal(new BigDecimal("1099.97"));
+        Invoice expected = new Invoice();
+        expected.setInvoiceId(1);
+        expected.setName("John Doe");
+        expected.setStreet("123 Main St");
+        expected.setCity("Anytown");
+        expected.setState("CA");
+        expected.setZipcode("12345");
+        expected.setItemType("Consoles");
+        expected.setItemId(1);
+        expected.setUnitPrice(new BigDecimal("499.99"));
+        expected.setQuantity(2);
+        expected.setSubtotal(new BigDecimal("999.98"));
+        expected.setTax(new BigDecimal("80.00"));
+        expected.setProcessingFee(new BigDecimal("14.99"));
+        expected.setTotal(new BigDecimal("1094.97"));
+
+        assertEquals(expected, actual);
     }
 
     @Test
