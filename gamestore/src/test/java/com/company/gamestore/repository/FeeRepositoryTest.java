@@ -1,6 +1,8 @@
 package com.company.gamestore.repository;
 
 import com.company.gamestore.model.Fee;
+import com.company.gamestore.model.Game;
+import com.company.gamestore.model.Fee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class FeeRepositoryTest {
@@ -30,7 +32,7 @@ public class FeeRepositoryTest {
         //Arrange
         Fee fee1 = new Fee();
         fee1.setFee(BigDecimal.valueOf(14.99));
-        fee1.setProductType("Console");
+        fee1.setProductType("Game");
 
         feeRepository.save(fee1);
 
@@ -49,7 +51,7 @@ public class FeeRepositoryTest {
         //Arrange
         Fee fee1 = new Fee();
         fee1.setFee(BigDecimal.valueOf(14.99));
-        fee1.setProductType("Console");
+        fee1.setProductType("Game");
         feeRepository.save(fee1);
 
         //Act
@@ -66,7 +68,7 @@ public class FeeRepositoryTest {
         //Arrange
         Fee fee1 = new Fee();
         fee1.setFee(BigDecimal.valueOf(14.99));
-        fee1.setProductType("Console");
+        fee1.setProductType("Game");
         feeRepository.save(fee1);
 
         //Act
@@ -83,7 +85,7 @@ public class FeeRepositoryTest {
         //Arrange
         Fee fee1 = new Fee();
         fee1.setFee(BigDecimal.valueOf(14.99));
-        fee1.setProductType("Console");
+        fee1.setProductType("Game");
         feeRepository.save(fee1);
         fee1.setProductType("T-shirt");
         fee1.setFee(BigDecimal.valueOf(1.98));
@@ -101,13 +103,27 @@ public class FeeRepositoryTest {
     @Test
     public void shouldDeleteFeeByProductType(){
 
-        //Arrange
-        Fee fee1 = new Fee();
-        fee1.setFee(BigDecimal.valueOf(14.99));
-        fee1.setProductType("Console");
-        feeRepository.save(fee1);
+        // Arrange
+        Fee fee = new Fee();
+        fee.setFee(BigDecimal.valueOf(14.99));
+        fee.setProductType("Game");
 
-        //Act
+        fee = feeRepository.save(fee);
+
+        // Act
+        Optional<Fee> foundFee = feeRepository.findFeeByProductType(fee.getProductType());
+
+        // Assert
+        assertTrue(foundFee.isPresent());
+        assertEquals(foundFee.get(), fee);
+
+        // Act
+        feeRepository.deleteByProductType(fee.getProductType());
+
+        foundFee = feeRepository.findFeeByProductType(fee.getProductType());
+
+        // Assert
+        assertFalse(foundFee.isPresent());
 
     }
 
