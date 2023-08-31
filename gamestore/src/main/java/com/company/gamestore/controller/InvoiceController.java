@@ -37,7 +37,7 @@ public class InvoiceController {
 
     @GetMapping("/invoice/by-name")
     public List<Invoice> getInvoiceByName(@RequestParam("name") String name) {
-        return invoiceRepo.findInvoiceByName(name);
+        return invoiceRepo.findInvoiceByName(name).get();
     }
 
     @PutMapping("/invoice/{invoiceId}")
