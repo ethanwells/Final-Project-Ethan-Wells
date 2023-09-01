@@ -21,6 +21,7 @@ This is a group final project designed to build a full-stack application for man
 - AWS Elastic Beanstalk
 - Amazon RDS
 
-## Getting Started
+## Screenshot of Functional AWS Endpoint
 
-### Clone the Repository
+![Screenshot](./screenshot.jpg)
+
