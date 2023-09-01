@@ -16,7 +16,7 @@ type Console {
     consoleId: Int!
     model: String!
     manufacturer: String!
-    memory_amount: String!
+    memoryAmount: String!
     processor: String!
     price: Float!
     quantity: Float!
