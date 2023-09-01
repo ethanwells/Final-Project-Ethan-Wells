@@ -23,5 +23,5 @@ This is a group final project designed to build a full-stack application for man
 
 ## Screenshot of Functional AWS Endpoint
 
-![Screenshot](./screenshot.jpg)
+![Screenshot](./screenshot.png)
 
