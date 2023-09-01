@@ -1,9 +1,9 @@
 #Game
 
 type Game {
-    game_id: ID!
+    gameId: Int!
     title: String!
-    esrb_rating: String!
+    esrbRating: String!
     description: String!
     price: Float!
     studio: String!
@@ -13,10 +13,10 @@ type Game {
 # Console
 
 type Console {
-    console_id: ID!
+    consoleId: Int!
     model: String!
     manufacturer: String!
-    memory_amount: String!
+    memoryAmount: String!
     processor: String!
     price: Float!
     quantity: Float!
@@ -25,7 +25,7 @@ type Console {
 # Tshirt
 
 type Tshirt {
-    tshirt_id: ID!
+    tshirt_id: Int!
     size: String!
     color: String!
     description: String!
@@ -36,7 +36,7 @@ type Tshirt {
 # Invoice
 
 type Invoice {
-    invoice_id: ID!
+    invoice_id: Int!
     name: String!
     street: String!
     city: String!
@@ -72,8 +72,8 @@ type Tax {
 type Query {
 
     # Find class objects by ID
-    findGameById(id:ID!): Game
-    findConsoleById(id:ID!): Console
+    findGameById(id:Int!): Game
+    findConsoleById(id:Int!): Console
     getAllGames:[Game!]!
     getGameByTitle(title: String!):Game
     getGameByEsrbRating(esrb_rating: String!):Game

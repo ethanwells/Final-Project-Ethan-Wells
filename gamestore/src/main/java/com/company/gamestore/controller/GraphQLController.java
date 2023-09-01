@@ -55,13 +55,6 @@ public class GraphQLController {
         return returnVal.orElse(null);
     }
 
-    // Tshirt
-    @QueryMapping
-    public Tshirt findTshirtById(@Argument int id) {
-        Optional<Tshirt> returnVal = this.tshirtRepository.findById(id);
-        return returnVal.isPresent() ? (Tshirt)returnVal.get() : null;
-    }
-
     @QueryMapping
     public List<Game> getAllGames() {return gameRepository.findAll();}
 
@@ -120,31 +113,6 @@ public class GraphQLController {
         }
     }
 
-    // As a user, I would like to be able to search for games by color and size.
-
-    // return tshirt by color
-    @SchemaMapping
-    public List<Tshirt> findTshirtByColor(String color) {
-        Optional<List<Tshirt>> returnVal = tshirtRepository.findByColor(color);
-  
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        } else {
-            return null;
-        }
-    }
-
-    // return tshirt by size
-    @SchemaMapping
-    public List<Tshirt> findTshirtBySize(String size) {
-        Optional<List<Tshirt>> returnVal = tshirtRepository.findBySize(size);
-
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        } else {
-            return null;
-        }
-    }
 
 
 }
