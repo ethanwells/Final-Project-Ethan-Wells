@@ -1,6 +1,7 @@
 package com.company.gamestore.controller;
 
 import com.company.gamestore.model.Game;
+import com.company.gamestore.model.Console;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
 import com.company.gamestore.service.InvoiceServiceLayer;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class InvoiceController {
     @Autowired
     private InvoiceRepository invoiceRepo;
+    @Autowired
     private InvoiceServiceLayer invoiceServiceLayer;
 
     @PostMapping("/invoice")

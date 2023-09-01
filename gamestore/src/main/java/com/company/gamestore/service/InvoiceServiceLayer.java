@@ -10,15 +10,20 @@ import java.util.Optional;
 
 @Component
 public class InvoiceServiceLayer {
+    @Autowired
     private GameRepository gameRepository;
+    @Autowired
     private TaxRepository taxRepository;
+    @Autowired
     private FeeRepository feeRepository;
+    @Autowired
     private TshirtRepository tshirtRepository;
+    @Autowired
     private ConsoleRepository consoleRepository;
+    @Autowired
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-
     public InvoiceServiceLayer(GameRepository gameRepository, TaxRepository taxRepository, FeeRepository feeRepository, InvoiceRepository invoiceRepository, TshirtRepository tshirtRepository, ConsoleRepository consoleRepository){
 
         this.gameRepository = gameRepository;
@@ -41,14 +46,27 @@ public class InvoiceServiceLayer {
         switch (itemType) {
             case "Consoles":
                 resource = consoleRepository.findById(partialData.getItemId());
-                Console console = (Console) resource;
+                Optional<Console> consoleData = (Optional<Console>) resource;
 
-                //Complete the invoice for Console
+                if (!consoleData.isPresent()) {
+                    throw new NotFoundException("No console found by this ID");
+                }
+
+                Console console = consoleData.get();
+
+                // Complete the invoice for Console
                 completeData = createConsoleInvoice(console, partialData);
                 break;
+
             case "T-shirts":
                 resource = tshirtRepository.findById(partialData.getItemId());
-                Tshirt tshirt = (Tshirt) resource;
+                Optional<Tshirt> tshirtData = (Optional<Tshirt>) resource;
+
+                if (!tshirtData.isPresent()) {
+                    throw new NotFoundException("No T-shirt found by this ID");
+                }
+
+                Tshirt tshirt = tshirtData.get();
 
                 // Complete the invoice for T-shirts
                 completeData = createTshirtInvoice(tshirt, partialData);
@@ -56,14 +74,20 @@ public class InvoiceServiceLayer {
 
             case "Games":
                 resource = gameRepository.findById(partialData.getItemId());
-                Game game = (Game) resource;
+                Optional<Game> gameData = (Optional<Game>) resource;
 
-                //Complete the invoice for Console
+                if (!gameData.isPresent()) {
+                    throw new NotFoundException("No game found by this ID");
+                }
+
+                Game game = gameData.get();
+
+                // Complete the invoice for Games
                 completeData = createGameInvoice(game, partialData);
                 break;
 
             default:
-                throw new IllegalArgumentException("Item type is illegal");
+                throw new NotFoundException("Item type was not found");
         }
 
         return invoiceRepository.save(completeData);
@@ -90,7 +114,7 @@ public class InvoiceServiceLayer {
         }
 
         Tax stateTax = query.get();
-        partialData.setTax(stateTax.getRate());
+        partialData.setTax(stateTax.getRate().multiply(partialData.getSubtotal()));
 
         Optional<Fee> query2 = feeRepository.findFeeByProductType(partialData.getItemType());
         if (query2.isEmpty()) {
@@ -98,10 +122,17 @@ public class InvoiceServiceLayer {
         }
 
         Fee processingFee = query2.get();
-        partialData.setProcessingFee(processingFee.getFee());
+
+
+        if( partialData.getQuantity() > 10){
+            BigDecimal additionalFee = new BigDecimal("15.49");
+            partialData.setProcessingFee(processingFee.getFee().add(additionalFee));
+        }else{
+            partialData.setProcessingFee(processingFee.getFee());
+        }
 
         // Calculate with tax and processing fee
-        BigDecimal subtotalTaxApplied = partialData.getSubtotal().multiply(partialData.getTax()).add(partialData.getSubtotal());
+        BigDecimal subtotalTaxApplied = partialData.getSubtotal().add(partialData.getTax());
         BigDecimal total = subtotalTaxApplied.add(partialData.getProcessingFee());
 
         partialData.setTotal(total);
@@ -120,6 +151,8 @@ public class InvoiceServiceLayer {
         console.setQuantity(console.getQuantity() - partialData.getQuantity());
         consoleRepository.save(console);
 
+        partialData.setUnitPrice(console.getPrice());
+
         //Calculate subtotal
         BigDecimal quantity = BigDecimal.valueOf(partialData.getQuantity());
         BigDecimal price = partialData.getUnitPrice();
@@ -132,7 +165,7 @@ public class InvoiceServiceLayer {
         }
 
         Tax stateTax = query.get();
-        partialData.setTax(stateTax.getRate());
+        partialData.setTax(stateTax.getRate().multiply(partialData.getSubtotal()));
 
         //Find processing fee
         Optional<Fee> query2 = feeRepository.findFeeByProductType(partialData.getItemType());
@@ -142,18 +175,24 @@ public class InvoiceServiceLayer {
         }
 
         Fee processingFee = query2.get();
-        partialData.setProcessingFee(processingFee.getFee());
-
         //Calculate with tax and processing fee
-        BigDecimal subtotalTaxApplied = partialData.getSubtotal().multiply(partialData.getTax()).add(partialData.getSubtotal());
-        BigDecimal total = subtotalTaxApplied.add(partialData.getProcessingFee());
+
+
+        BigDecimal subtotalTaxApplied = partialData.getSubtotal().add(partialData.getTax());
+        BigDecimal totalFees = new BigDecimal("0.00");
 
         if(partialData.getQuantity() > 15){
              BigDecimal additionalFees = new BigDecimal("15.49");
-             total = total.add(additionalFees);
+             totalFees = totalFees.add(additionalFees).add(processingFee.getFee());
+        }else{
+            totalFees = totalFees.add(processingFee.getFee());
         }
 
-        partialData.setTotal(total);
+        partialData.setProcessingFee(totalFees);
+
+        BigDecimal finalTotal = subtotalTaxApplied.add(totalFees);
+
+        partialData.setTotal(finalTotal);
 
         Invoice completeData = invoiceRepository.save(partialData);
 
