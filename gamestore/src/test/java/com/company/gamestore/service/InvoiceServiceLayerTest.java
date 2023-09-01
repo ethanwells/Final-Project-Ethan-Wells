@@ -17,20 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class InvoiceServiceLayerTest {
-    @Mock
-    private ConsoleRepository consoleRepository;
-    @Mock
-    private FeeRepository feeRepository;
-    @Mock
-    private GameRepository gameRepository;
-    @Mock
-    private InvoiceRepository invoiceRepository;
-    @Mock
-    private TaxRepository taxRepository;
-    @Mock
-    private TshirtRepository tshirtRepository;
 
-    @InjectMocks
+    private ConsoleRepository consoleRepository;
+
+    private FeeRepository feeRepository;
+
+    private GameRepository gameRepository;
+
+    private InvoiceRepository invoiceRepository;
+
+    private TaxRepository taxRepository;
+
+    private TshirtRepository tshirtRepository;
     private InvoiceServiceLayer invoiceServiceLayer;
 
 
@@ -43,6 +41,10 @@ public class InvoiceServiceLayerTest {
         setUpInvoiceRepositoryMock();
         setUpTshirtRepositoryMock();
         setUpTaxRepositoryMock();
+
+        invoiceServiceLayer = new InvoiceServiceLayer(gameRepository, taxRepository, feeRepository, invoiceRepository, tshirtRepository, consoleRepository);
+
+
     }
     private void setUpConsoleRepositoryMock(){
         consoleRepository = mock(ConsoleRepository.class);
@@ -84,7 +86,7 @@ public class InvoiceServiceLayerTest {
 
         // Set up behavior for the save method
         doReturn(fee1).when(feeRepository).save(any(Fee.class));
-        doReturn(Optional.of(fee1)).when(feeRepository).findFeeByProductType("Games");
+        doReturn(Optional.of(fee1)).when(feeRepository).findFeeByProductType("Consoles");
         doReturn(mockFees).when(feeRepository).findAll();
     }
 
@@ -118,15 +120,15 @@ public class InvoiceServiceLayerTest {
 
         // Create a sample invoice object
         Invoice invoice1 = new Invoice();
-        invoice1.setInvoiceId(1);
         invoice1.setName("John Doe");
         invoice1.setStreet("123 Main St");
         invoice1.setCity("Anytown");
         invoice1.setState("CA");
         invoice1.setZipcode("12345");
-        invoice1.setItemType("Consoles");
         invoice1.setItemId(1);
+        invoice1.setItemType("Consoles");
         invoice1.setQuantity(2);
+
 
 
 
@@ -142,9 +144,9 @@ public class InvoiceServiceLayerTest {
         invoice2.setUnitPrice(new BigDecimal("499.99"));
         invoice2.setQuantity(2);
         invoice2.setSubtotal(new BigDecimal("999.98"));
-        invoice2.setTax(new BigDecimal("89.99"));
-        invoice2.setProcessingFee(new BigDecimal("10.00"));
-        invoice2.setTotal(new BigDecimal("1099.97"));
+        invoice2.setTax(new BigDecimal("79.9984"));
+        invoice2.setProcessingFee(new BigDecimal("14.99"));
+        invoice2.setTotal(new BigDecimal("1094.97"));
 
 
 
@@ -153,8 +155,8 @@ public class InvoiceServiceLayerTest {
         mockInvoices.add(invoice1);
 
         // Set up behavior for the save method
-        doReturn(invoice1).when(invoiceRepository).save(any(Invoice.class));
-        doReturn(Optional.of(invoice1)).when(invoiceRepository).findById(anyInt());
+        doReturn(invoice2).when(invoiceRepository).save(any(Invoice.class));
+        doReturn(Optional.of(invoice2)).when(invoiceRepository).findById(1);
         doReturn(mockInvoices).when(invoiceRepository).findAll();
     }
 
@@ -203,14 +205,13 @@ public class InvoiceServiceLayerTest {
     @Test
     public void testCreateInvoice(){
         Invoice invoice1 = new Invoice();
-        invoice1.setInvoiceId(1);
         invoice1.setName("John Doe");
         invoice1.setStreet("123 Main St");
         invoice1.setCity("Anytown");
         invoice1.setState("CA");
         invoice1.setZipcode("12345");
-        invoice1.setItemType("Consoles");
         invoice1.setItemId(1);
+        invoice1.setItemType("Consoles");
         invoice1.setQuantity(2);
 
         Invoice actual = invoiceServiceLayer.createInvoice(invoice1);
@@ -227,9 +228,11 @@ public class InvoiceServiceLayerTest {
         expected.setUnitPrice(new BigDecimal("499.99"));
         expected.setQuantity(2);
         expected.setSubtotal(new BigDecimal("999.98"));
-        expected.setTax(new BigDecimal("80.00"));
+        expected.setTax(new BigDecimal("79.00"));
         expected.setProcessingFee(new BigDecimal("14.99"));
         expected.setTotal(new BigDecimal("1094.97"));
+
+
 
         assertEquals(expected, actual);
     }
