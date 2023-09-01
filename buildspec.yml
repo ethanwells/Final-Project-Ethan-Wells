@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Installing source code dependencies...
+      - mvn clean install -DskipTests
+  build:
+    commands:
+      - echo Building the application...
+      - mvn package -DskipTests
+artifacts:
+  files:
+    - gamestore/target/*.jar
+  discard-paths: yes
