@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Game;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
 import com.company.gamestore.service.InvoiceServiceLayer;
@@ -47,6 +48,7 @@ public class InvoiceControllerTest {
     // Create
     @Test
     public void testCreateInvoice() throws Exception {
+
         Invoice partialData = new Invoice();
         partialData.setName("John Doe");
         partialData.setStreet("123 Main St");

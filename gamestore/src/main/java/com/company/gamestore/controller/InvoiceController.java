@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Game;
 import com.company.gamestore.model.Console;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
@@ -22,7 +23,7 @@ public class InvoiceController {
 
     @PostMapping("/invoice")
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice addInvoice(@Valid @RequestBody Invoice invoice) {
+    public Invoice addInvoice(@RequestBody @Valid Invoice invoice) {
        return invoiceServiceLayer.createInvoice(invoice);
     }
 
