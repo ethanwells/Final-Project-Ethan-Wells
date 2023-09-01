@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Game;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
 import com.company.gamestore.service.InvoiceServiceLayer;
@@ -20,7 +21,7 @@ public class InvoiceController {
 
     @PostMapping("/invoice")
     @ResponseStatus(HttpStatus.CREATED)
-    public Invoice addInvoice(@Valid @RequestBody Invoice invoice) {
+    public Invoice addInvoice(@RequestBody @Valid Invoice invoice) {
        return invoiceServiceLayer.createInvoice(invoice);
     }
 
@@ -37,7 +38,12 @@ public class InvoiceController {
 
     @GetMapping("/invoice/by-name")
     public List<Invoice> getInvoiceByName(@RequestParam("name") String name) {
-        return invoiceRepo.findInvoiceByName(name).get();
+        Optional<List<Invoice>> returnVal = invoiceRepo.findInvoiceByName(name);
+        if (returnVal.isPresent()) {
+            return returnVal.get();
+        } else {
+            return null;
+        }
     }
 
     @PutMapping("/invoice/{invoiceId}")

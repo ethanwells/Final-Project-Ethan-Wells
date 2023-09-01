@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Game;
 import com.company.gamestore.model.Invoice;
 import com.company.gamestore.repository.InvoiceRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,10 +59,7 @@ public class InvoiceControllerTest {
         invoice.setProcessingFee(new BigDecimal("777.77"));
         invoice.setTotal(new BigDecimal("131.31"));
 
-
-
-
-        when(invoiceRepository.save(Mockito.any(Invoice.class)))
+        Mockito.when(invoiceRepository.save(Mockito.any(Invoice.class)))
                 .thenReturn(invoice);
 
         ObjectMapper objectMapper = new ObjectMapper();

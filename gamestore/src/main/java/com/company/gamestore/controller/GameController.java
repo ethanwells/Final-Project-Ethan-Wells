@@ -1,5 +1,6 @@
 package com.company.gamestore.controller;
 
+import com.company.gamestore.model.Console;
 import com.company.gamestore.model.Game;
 import com.company.gamestore.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +18,49 @@ public class GameController {
     private GameRepository gameRepo;
 
     @GetMapping("/game/games")
+    @ResponseStatus(HttpStatus.OK)
     public List<Game> getAllGames() {
         return gameRepo.findAll();
     }
 
     @GetMapping("/game/{gameId}")
+    @ResponseStatus(HttpStatus.OK)
     public Optional<Game> getGameById(@PathVariable("gameId") int gameId) {
         return gameRepo.findById(gameId);
     }
 
     @GetMapping("/game/by-studio")
+    @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByStudio(@RequestParam("studio") String studio) {
-        return gameRepo.findGameByStudio(studio).get();
+        Optional<List<Game>> returnVal = gameRepo.findGameByStudio(studio);
+        if (returnVal.isPresent()) {
+            return returnVal.get();
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/game/by-rating")
+    @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByESRB(@RequestParam("esrbRating") String esrbRating) {
-        return gameRepo.findGameByEsrbRating(esrbRating).get();
+        Optional<List<Game>> returnVal = gameRepo.findGameByEsrbRating(esrbRating);
+        if (returnVal.isPresent()) {
+            return returnVal.get();
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/game/by-title")
+    @ResponseStatus(HttpStatus.OK)
     public List<Game> getGamesByTitle(@RequestParam("title") String title) {
-        return gameRepo.findGameByTitle(title).get();
+
+        Optional<List<Game>> returnVal = gameRepo.findGameByTitle(title);
+        if (returnVal.isPresent()) {
+            return returnVal.get();
+        } else {
+            return null;
+        }
     }
 
 
