@@ -27,6 +27,7 @@ public class Game {
 
     @NotBlank(message = "ESRB rating is required")
     @Size(max = 50, message = "ESRB rating must not exceed 50 characters")
+    @Column(name = "esrb_rating")
     private String esrbRating;
 
     @NotBlank(message = "Description is required")

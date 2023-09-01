@@ -62,9 +62,9 @@ public class GraphQLController {
     public List<Console> getAllConsoles() {return consoleRepository.findAll();}
 
 
-    @SchemaMapping
+    @QueryMapping
 
-    public List<Game> findGameByStudio(String studio) {
+    public List<Game> findGameByStudio(@Argument String studio) {
         Optional<List<Game>> returnVal = gameRepository.findGameByStudio(studio);
 
         if (returnVal.isPresent()) {
@@ -75,8 +75,8 @@ public class GraphQLController {
     }
 
     // return game by ESRB rating
-    @SchemaMapping
-    public List<Game> findGameByEsrbRatingString(String esrbRating) {
+    @QueryMapping
+    public List<Game> findGameByEsrbRatingString(@Argument String esrbRating) {
         Optional<List<Game>> returnVal = gameRepository.findGameByEsrbRating(esrbRating);
 
         if (returnVal.isPresent()) {
@@ -87,8 +87,8 @@ public class GraphQLController {
     }
 
     // return game by title
-    @SchemaMapping
-    public List<Game> findGameByTitle(String title) {
+    @QueryMapping
+    public List<Game> findGameByTitle(@Argument String title) {
         Optional<List<Game>> returnVal = gameRepository.findGameByTitle(title);
 
         if (returnVal.isPresent()) {
@@ -102,8 +102,8 @@ public class GraphQLController {
     // As a user, I would like to be able to search for consoles by manufacturer.
 
     // return console by manufacturer
-    @SchemaMapping
-    public List<Console> findConsoleByManufacturer(String manufacturer) {
+    @QueryMapping
+    public List<Console> findConsoleByManufacturer(@Argument String manufacturer) {
         Optional<List<Console>> returnVal = consoleRepository.findConsoleByManufacturer(manufacturer);
 
         if (returnVal.isPresent()) {

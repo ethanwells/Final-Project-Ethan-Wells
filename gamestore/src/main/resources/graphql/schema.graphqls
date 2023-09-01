@@ -2,24 +2,24 @@
 
 type Game {
     gameId: Int!
-    title: String!
-    esrbRating: String!
-    description: String!
-    price: Float!
-    studio: String!
-    quantity: Int!
+    title: String
+    esrbRating: String
+    description: String
+    price: Float
+    studio: String
+    quantity: Int
 }
 
 # Console
 
 type Console {
     consoleId: Int!
-    model: String!
-    manufacturer: String!
-    memoryAmount: String!
-    processor: String!
-    price: Float!
-    quantity: Float!
+    model: String
+    manufacturer: String
+    memoryAmount: String
+    processor: String
+    price: Float
+    quantity: Float
 }
 
 # Tshirt
@@ -72,13 +72,13 @@ type Tax {
 type Query {
 
     # Find class objects by ID
-    findGameById(id:Int!): Game
-    findConsoleById(id:Int!): Console
-    getAllGames:[Game!]!
-    getGameByTitle(title: String!):Game
-    getGameByEsrbRating(esrb_rating: String!):Game
-    getGameByStudio(studio: String!):Game
-    getAllConsoles: [Console!]!
-    getConsoleByManufacturer(manufacturer: String!):Console
+    findGameById(id:Int): Game
+    findConsoleById(id:Int): Console
+    getAllGames:[Game]
+    findGameByTitle(title: String):[Game]
+    findGameByEsrbRatingString(esrbRating: String):[Game]
+    findGameByStudio(studio: String):[Game]
+    getAllConsoles: [Console]
+    findConsoleByManufacturer(manufacturer: String):[Console]
 
 }
