@@ -4,6 +4,7 @@ phases:
   pre_build:
     commands:
       - echo Installing source code dependencies...
+      - cd gamestore
       - mvn clean install -DskipTests
   build:
     commands:
